@@ -12,8 +12,8 @@ Gem::Specification.new do |spec|
     spec.homepage      = "http://domainforproject.com/"
     spec.license       = "MIT"
 
-    spec.files         = ['lib/NAME.rb']
+    spec.files         = ['lib/gothonweb.rb']
     spec.executables   = ['bin/NAME']
-    spec.test_files    = ['tests/test_NAME.rb']
+    spec.test_files    = ['tests/test_gothonweb.rb', 'tests/test_map.rb']
     spec.require_paths = ["lib"]
 end
