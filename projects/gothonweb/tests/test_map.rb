@@ -4,10 +4,10 @@ require "minitest/autorun"
 class TestGame < Minitest::Test
 
     def test_room()
-        gold = Room.new("GoldRoom",
+        gold = Room.new("GoldMap::Room",
                     """This room has gold in it you can grab. There's a
                 door to the north.""")
-        assert_equal(gold.name, "GoldRoom")
+        assert_equal(gold.name, "GoldMap::Room")
         assert_equal(gold.paths, {})
     end
 
@@ -34,5 +34,32 @@ class TestGame < Minitest::Test
         assert_equal(start.go('west'), west)
         assert_equal(start.go('west').go('east'), start)
         assert_equal(start.go('down').go('up'), start)
+    end
+
+    def test_gothon_game_map()
+        assert_equal(Map::START.go('shoot!'), Map::GENERIC_DEATH)
+        assert_equal(Map::START.go('dodge!'), Map::GENERIC_DEATH)
+
+        room = Map::START.go('tell a joke')
+        assert_equal(room, Map::LASER_WEAPON_ARMORY)
+
+        # complete this test by making it play the game
+    end
+
+    def test_session_loading()
+        session = {}
+
+        room = Map::load_room(session)
+        assert_equal(room, nil)
+
+        Map::save_room(session, Map::START)
+        room = Map::load_room(session)
+        assert_equal(room, Map::START)
+
+        room = room.go('tell a joke')
+        assert_equal(room, Map::LASER_WEAPON_ARMORY)
+
+        Map::save_room(session, room)
+        assert_equal(room, Map::LASER_WEAPON_ARMORY)
     end
 end
